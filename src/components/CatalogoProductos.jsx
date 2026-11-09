@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react"
-import { guardarProducto, obtenerProductos, borrarProducto } from "../services/ProductoServices"
+import { guardarProducto, obtenerProductos, borrarProducto, actualizarProducto } from "../services/ProductoServices"
 import CardProducto from "./CardProducto";
 import FormularioProducto from "./FormularioProducto";
 
 export default function CatalogoProductos()
 {    
 const [productos, setProductos] = useState([]);
+const [productoEditar, setProductoEditar] = useState({id:0
+
+});
+const[mensaje,setMensaje]=useState('')
 
  async function listar(){
            const resultado = await obtenerProductos();
@@ -14,19 +18,31 @@ const [productos, setProductos] = useState([]);
 
 
  async function agregarProducto(producto){
-          await guardarProducto(producto);
+          if (producto.id > 0)
+          {
+            console.log('holis');
+            await actualizarProducto(producto.id, producto)
+          }
+          else{
+            console.log('holis2');
+            await guardarProducto(producto);
+          }
           listar();
         }
 
 async function eliminarProducto(id){
+    setMensaje('Eliminando Producto...Por Favor Espere')
           await borrarProducto(id);
           listar();
+          setMensaje('')
         }
-
+function editarProducto(productoeditar){
+    setProductoEditar(productoeditar);
+}
 
 useEffect(
     () =>
-    {
+{
        
         listar();
     }     
@@ -35,7 +51,8 @@ useEffect(
     return(
 
         <>
-        <FormularioProducto guardar={agregarProducto}></FormularioProducto>
+        <FormularioProducto productoEditar={productoEditar} guardar={agregarProducto}></FormularioProducto>
+        <span>{mensaje}</span>
         <section className="products-container">
              {productos.map(e => <CardProducto 
              id = {e.id}
@@ -44,6 +61,7 @@ useEffect(
              stock= {e.stock}
              imageUrl= {e.imageUrl}
              eliminar={eliminarProducto}
+             editar={editarProducto}
              />  ) }
         </section>
         </>

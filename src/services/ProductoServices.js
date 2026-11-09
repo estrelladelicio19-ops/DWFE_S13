@@ -41,3 +41,18 @@ export async function borrarProducto(id) {
 
     return await respuesta.json();
 }
+
+export async function actualizarProducto(id,producto) {    
+    const respuesta = await fetch(`${URL_API}/${id}`,{
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(producto)
+    });    
+
+    if (!respuesta.ok) {
+        throw new Error("Error al eliminar producto");
+    }
+    return await respuesta.json();
+}
