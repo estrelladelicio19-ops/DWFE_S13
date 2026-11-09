@@ -26,3 +26,18 @@ export async function guardarProducto(producto) {
 
     return await respuesta.json();
 }
+
+export async function borrarProducto(id) {    
+    const respuesta = await fetch(`${URL_API}/${id}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json"
+        },
+    });    
+
+    if (!respuesta.ok) {
+        throw new Error("Error al eliminar producto");
+    }
+
+    return await respuesta.json();
+}

@@ -1,4 +1,4 @@
-export default function CardProducto({id,category,name, stock, imageUrl} )
+export default function CardProducto({id,category,name, stock, imageUrl, eliminar} )
 {
     return(
         <article className="product-card">
@@ -16,6 +16,7 @@ export default function CardProducto({id,category,name, stock, imageUrl} )
             <strong>{stock}</strong>
         </div>
     </div>
+    <button onClick={()=>{eliminar(id)}}>Eliminar</button>
     </article>
     )
 

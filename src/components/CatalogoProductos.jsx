@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { guardarProducto, obtenerProductos } from "../services/ProductoServices"
+import { guardarProducto, obtenerProductos, borrarProducto } from "../services/ProductoServices"
 import CardProducto from "./CardProducto";
 import FormularioProducto from "./FormularioProducto";
 
@@ -15,6 +15,11 @@ const [productos, setProductos] = useState([]);
 
  async function agregarProducto(producto){
           await guardarProducto(producto);
+          listar();
+        }
+
+async function eliminarProducto(id){
+          await borrarProducto(id);
           listar();
         }
 
@@ -38,6 +43,7 @@ useEffect(
              category= {e.category}
              stock= {e.stock}
              imageUrl= {e.imageUrl}
+             eliminar={eliminarProducto}
              />  ) }
         </section>
         </>
