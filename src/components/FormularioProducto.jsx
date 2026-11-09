@@ -29,7 +29,7 @@ function agregar(e){
 
 useEffect(()=>{
     
-        if (productoEditar.id > 0)
+        //if (productoEditar.id > 0)
         setFormulario(productoEditar);
     },[productoEditar])
 
@@ -53,7 +53,7 @@ useEffect(()=>{
             <input type="url" id="imageUrl" name="imageUrl" value={Formulario.imageUrl} onChange={manejarCambio}></input> 
             <br />
             <br />
-            <button>Guardar</button>
+            <button>{Formulario.id > 0? "Editar" :"Guardar"}</button>
 
         </form>
         
